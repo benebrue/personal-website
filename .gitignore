@@ -1,0 +1,40 @@
+# ── Python / uv ─────────────────────────────────────────────────────────────
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# uv.lock is deliberately NOT ignored — commit it so the build is reproducible.
+
+# ── Secrets ─────────────────────────────────────────────────────────────────
+# This repository is PUBLIC. Nothing credential-shaped should ever land in it.
+.env
+.env.*
+*.pem
+*.key
+secrets.*
+
+# ── Editors / tooling ───────────────────────────────────────────────────────
+.claude/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# ── OS noise ────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs / scratch ──────────────────────────────────────────────────────────
+*.log
+scratch/
+tmp/
+
+# NOTE: docs/ is the build output and MUST stay tracked — Cloudflare Pages
+# and GitHub Pages both serve the committed files, and nothing rebuilds the
+# site on their side. Do not add docs/ here.

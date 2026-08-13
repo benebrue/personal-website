@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benedikt Brückner</title>
+<meta name="description" content="Benedikt Brückner — AI research scientist working on formal verification and certified robustness of neural networks. Publications, background and contact.">
+<meta name="author" content="Benedikt Brückner">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<!-- Names the authoritative URL, so www and the bare domain aren't indexed as
+     two competing copies. Belt and braces alongside the www -> apex redirect. -->
+<link rel="canonical" href="https://benediktbrueckner.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F1E7; --ink:#16324A; --muted:#6C7F91; --faint:#CFCCC0;
+  --brass:#A67C3D; --sea:#8FB3C4;
+  --serif:"Spectral",Georgia,serif;
+  --sans:"Inter",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,Consolas,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+/* Any author-level `display` outranks the UA stylesheet's [hidden] rule, so
+   `.btn{display:inline-block}` silently breaks the hidden attribute. Restore
+   it once, globally, rather than patching each offender. */
+[hidden]{display:none !important}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-weight:300;font-size:17.5px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── chart furniture (all decorative, all behind content) ── */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.contours{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+.rose{
+  position:absolute;top:-32vmin;right:-30vmin;width:96vmin;height:96vmin;
+  opacity:.13;animation:spin 300s linear infinite;transform-origin:50% 50%;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.swell{position:fixed;left:0;right:0;bottom:0;height:26vh;z-index:0;pointer-events:none;overflow:hidden}
+.swell svg{position:absolute;bottom:0;left:0;width:220%;height:100%}
+.swell .s1{animation:drift 46s linear infinite;opacity:.16}
+.swell .s2{animation:drift 71s linear infinite reverse;opacity:.10}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── content ─────────────────────────────────────────── */
+.wrap{position:relative;z-index:1;max-width:780px;margin:0 auto;
+      padding:clamp(3.5rem,9vw,7rem) clamp(1.75rem,5vw,3rem) 9rem}
+header{margin-bottom:clamp(2.5rem,6vw,4rem)}
+.head-grid{display:grid;grid-template-columns:1fr auto;gap:clamp(1.25rem,4vw,2.5rem);align-items:start}
+/* Photographic plate: hairline frame with a paper mount, very slightly
+   desaturated so it sits in the chart palette instead of shouting out of it. */
+.portrait{width:clamp(104px,15vw,152px);aspect-ratio:4/5;object-fit:cover;display:block;
+  border:1px solid var(--faint);padding:5px;background:rgba(255,255,255,.55);
+  filter:saturate(.88) contrast(1.02)}
+/* Stacked on a phone, but photo FIRST. Letting it fall to the end of the
+   single column strands it below the contact links, related to nothing.
+   Must come AFTER .portrait above — same specificity, so source order is
+   what decides, and placing it earlier silently loses the width override. */
+@media (max-width:640px){
+  .head-grid{grid-template-columns:1fr}
+  .head-grid>div{order:2}
+  .portrait{order:1;width:96px;margin-bottom:1.15rem}
+}
+.eyebrow{
+  font-family:var(--sans);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--brass);font-weight:600;margin:0 0 1rem;
+}
+h1{font-size:clamp(2.6rem,7vw,4.25rem);font-weight:300;letter-spacing:-.02em;line-height:1.05;margin:0 0 1rem}
+.tagline{font-size:clamp(1.05rem,2.2vw,1.25rem);color:var(--muted);max-width:36ch;margin:0;font-style:italic;font-weight:300}
+/* Links live up here, next to the name, so reaching them never depends on
+   scrolling past the whole publication list. The footer keeps a copy. */
+.links{display:flex;flex-wrap:wrap;gap:.35rem 1.5rem;margin:1.6rem 0 0;
+  font-family:var(--sans);font-size:.84rem;letter-spacing:.02em}
+/* One dated line instead of a news feed: same "this site is alive" signal,
+   but there is only ever one item to keep current, so it cannot rot into a
+   list of stale entries. */
+.currently{border-left:2px solid var(--brass);padding:.15rem 0 .15rem 1.15rem;margin:0 0 1.7rem}
+.now-label{font-family:var(--sans);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;
+  font-weight:600;color:var(--brass);margin-bottom:.3rem}
+.currently p{margin:0;max-width:58ch}
+.hr{height:1px;background:var(--faint);margin:2.5rem 0 0}
+
+section{margin-top:clamp(2.75rem,6vw,4rem)}
+h2{
+  font-family:var(--sans);font-size:.72rem;letter-spacing:.19em;text-transform:uppercase;
+  font-weight:600;color:var(--muted);margin:0 0 1.35rem;display:flex;align-items:center;gap:.6rem;
+}
+h2::before{content:"";width:6px;height:6px;border:1px solid var(--brass);transform:rotate(45deg);flex:none}
+p{margin:0 0 1.2rem;max-width:64ch}
+a{color:inherit;text-decoration:none}
+/* Underline via text-decoration, not a background gradient. A background sits
+   at the bottom of the LINE BOX, so on a title that wraps — which is most of
+   them on a phone — the rule ends up nearer the following line than the words
+   it belongs to. text-underline-offset is measured from the baseline, so it
+   stays tight to its own text on every line. */
+.u{text-decoration:underline;text-decoration-color:var(--brass);
+   text-decoration-thickness:1px;text-underline-offset:.16em;
+   transition:text-decoration-thickness .3s var(--ease),color .3s var(--ease)}
+.u:hover{color:var(--brass);text-decoration-thickness:2px}
+
+.entry{display:grid;grid-template-columns:9rem 1fr;gap:1.5rem;padding:.85rem 0;
+       border-bottom:1px dotted var(--faint)}
+.entry:last-child{border-bottom:0}
+@media (max-width:640px){.entry{grid-template-columns:1fr;gap:.15rem}}
+.when{font-family:var(--sans);font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:.3rem}
+.what strong{font-weight:500}
+.where{color:var(--muted);font-size:.95rem;font-style:italic}
+.detail{color:var(--muted);font-size:.92rem;margin-top:.15rem}
+.plain{font-family:var(--sans);font-size:.88rem;color:var(--muted);margin:1rem 0 0;max-width:64ch}
+
+/* ── publications ────────────────────────────────────── */
+.footnote{font-family:var(--sans);font-size:.72rem;color:var(--muted);margin:-.75rem 0 1.25rem}
+.year{font-family:var(--sans);font-size:.75rem;letter-spacing:.15em;color:var(--brass);
+      font-weight:600;margin:2rem 0 .5rem}
+.yeargroup:first-child .year{margin-top:0}
+.pub{padding:1.1rem 0;border-top:1px dotted var(--faint)}
+.pub-title{font-size:1.1rem;font-weight:400;line-height:1.45;margin:0 0 .35rem;max-width:56ch}
+.authors{font-family:var(--sans);color:var(--muted);font-size:.86rem;line-height:1.6;max-width:60ch}
+.authors .me{color:var(--ink);font-weight:600}
+.venue{font-style:italic;color:var(--muted);font-size:.98rem;margin-top:.2rem}
+.badge{font-family:var(--sans);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  font-weight:600;font-style:normal;border:1px solid var(--faint);border-radius:2px;
+  padding:.08rem .4rem;color:var(--muted);margin-left:.5rem;white-space:nowrap}
+.actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.75rem}
+.btn{
+  font-family:var(--sans);font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;font-weight:600;
+  color:var(--muted);background:rgba(255,255,255,.5);border:1px solid var(--faint);
+  border-radius:2px;padding:.32rem .75rem;cursor:pointer;transition:all .3s var(--ease);
+  display:inline-block;line-height:1.5;
+}
+.btn:hover{color:var(--brass);border-color:var(--brass)}
+button.btn[aria-expanded="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.showall{margin-top:1.6rem;width:100%;padding:.62rem 1rem;letter-spacing:.14em}
+/* the fold toggle keeps the light treatment in both states — a full-width
+   inverted bar would shout louder than anything else on the page */
+.showall[aria-expanded="true"]{background:rgba(255,255,255,.5);color:var(--muted);border-color:var(--faint)}
+.showall[aria-expanded="true"]:hover{color:var(--brass);border-color:var(--brass)}
+.bib{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.bib.open{grid-template-rows:1fr}
+.bib>div{overflow:hidden}
+.bib pre{font-family:var(--mono);font-size:.76rem;line-height:1.65;color:var(--muted);
+  background:rgba(255,255,255,.62);border:1px solid var(--faint);border-radius:2px;
+  padding:.85rem 1rem;margin:.7rem 0 0;overflow-x:auto}
+.copied{font-family:var(--sans);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:600;color:var(--brass);opacity:0;transition:opacity .3s}
+.copied.show{opacity:1}
+footer{margin-top:4.5rem;padding-top:1.5rem;border-top:1px solid var(--faint);
+  font-family:var(--sans);font-size:.9rem;color:var(--muted);display:flex;gap:1.5rem;flex-wrap:wrap;
+  align-items:center;justify-content:space-between}
+.coords{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--faint)}
+@media (prefers-reduced-motion:reduce){.rose,.swell .s1,.swell .s2{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <!-- depth contours + soundings -->
+  <svg class="contours" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="none" stroke="#16324A" stroke-opacity=".16" stroke-width="1">
+      <path d="M-60 640 C 180 600, 300 700, 470 660 S 800 560, 1000 620 S 1180 690, 1280 650"/>
+      <path d="M-60 720 C 200 680, 340 780, 520 735 S 860 640, 1060 700 S 1220 760, 1280 730" stroke-dasharray="7 5"/>
+      <path d="M-60 545 C 150 520, 320 585, 500 545 S 790 470, 990 520 S 1190 580, 1280 550" stroke-opacity=".11"/>
+      <path d="M-60 830 C 240 790, 380 880, 560 840 S 900 750, 1120 805 S 1250 850, 1280 830" stroke-dasharray="7 5"/>
+      <path d="M120 160 C 240 90, 420 130, 520 210 S 700 330, 560 400 S 260 380, 180 300 S 40 220, 120 160" stroke-opacity=".13"/>
+    </g>
+    <g fill="#16324A" fill-opacity=".2" font-family="Spectral,Georgia,serif" font-style="italic" font-size="12">
+      <text x="240" y="616">17</text><text x="430" y="672">23</text><text x="640" y="596">31</text>
+      <text x="850" y="640">28</text><text x="1050" y="676">36</text><text x="330" y="756">19</text>
+      <text x="700" y="712">25</text><text x="960" y="770">41</text><text x="150" y="560">12</text>
+      <text x="560" y="520">9</text><text x="880" y="500">14</text><text x="300" y="250">7</text>
+      <text x="460" y="330">11</text><text x="620" y="840">33</text><text x="1100" y="560">44</text>
+    </g>
+  </svg>
+
+  <!-- compass rose with rhumb lines -->
+  <svg class="rose" viewBox="-200 -200 400 400" aria-hidden="true">
+    <g stroke="#16324A" fill="none" stroke-width=".6">
+      <circle r="150"/><circle r="132"/><circle r="66" stroke-width=".4"/>
+      <g id="rhumbs"></g>
+    </g>
+    <g fill="#16324A">
+      <path d="M0 -150 L11 -14 L0 0 L-11 -14 Z" opacity=".85"/>
+      <path d="M0 150 L11 14 L0 0 L-11 14 Z" opacity=".45"/>
+      <path d="M-150 0 L-14 11 L0 0 L-14 -11 Z" opacity=".45"/>
+      <path d="M150 0 L14 11 L0 0 L14 -11 Z" opacity=".45"/>
+      <path d="M106 -106 L14 -6 L0 0 L6 -14 Z" opacity=".3"/>
+      <path d="M-106 106 L-14 6 L0 0 L-6 14 Z" opacity=".3"/>
+      <path d="M-106 -106 L-6 -14 L0 0 L-14 -6 Z" opacity=".3"/>
+      <path d="M106 106 L6 14 L0 0 L14 6 Z" opacity=".3"/>
+    </g>
+    <text x="0" y="-158" text-anchor="middle" font-family="Spectral,serif" font-size="16" fill="#16324A">N</text>
+  </svg>
+</div>
+
+<!-- Swell. The drift keyframe shifts each SVG by -50% of its own width,
+     i.e. 800 viewBox units, so the wavelength MUST divide 800 or the loop
+     visibly snaps sideways on restart. s1 has wavelength 400 (four cycles
+     across, shifts by two); s2 has wavelength 800 (two cycles, shifts by
+     one). Change one and you have to change the other to match. -->
+<div class="swell" aria-hidden="true">
+  <svg class="s1" viewBox="0 0 1600 200" preserveAspectRatio="none">
+    <path fill="#8FB3C4" d="M0 120 C 50 96, 150 96, 200 120 S 350 144, 400 120
+                            S 550 96, 600 120 S 750 144, 800 120
+                            S 950 96, 1000 120 S 1150 144, 1200 120
+                            S 1350 96, 1400 120 S 1550 144, 1600 120 L1600 200 L0 200 Z"/>
+  </svg>
+  <svg class="s2" viewBox="0 0 1600 200" preserveAspectRatio="none">
+    <path fill="#16324A" d="M0 148 C 100 122, 300 122, 400 148 S 700 174, 800 148
+                            S 1100 122, 1200 148 S 1500 174, 1600 148 L1600 200 L0 200 Z"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="head-grid">
+      <div>
+        <p class="eyebrow">London &middot; 51°30′N 000°07′W</p>
+        <h1>Benedikt Brückner</h1>
+        <p class="tagline">AI research scientist working on formal verification and certified robustness of neural networks.</p>
+        <nav class="links" aria-label="Contact and profiles">
+          <a class="u mail" rel="nofollow" data-u="YmVuZWRpa3Q=" data-d="c2FmZWludGVsbGlnZW5jZS5haQ=="
+             >benedikt [at] safeintelligence [dot] ai</a>
+          <a class="u" href="https://scholar.google.com/citations?user=gNrX1zoAAAAJ">Google Scholar</a>
+          <a class="u" href="https://github.com/benebrue">GitHub</a>
+          <a class="u" href="https://www.linkedin.com/in/benedikt-brueckner/">LinkedIn</a>
+        </nav>
+      </div>
+      <!--PORTRAIT-->
+    </div>
+    <div class="hr"></div>
+  </header>
+
+  <section>
+    <h2>About</h2>
+    <div class="currently">
+      <div class="now-label">Now &middot; August 2026</div>
+      <p>Just finished my PhD at Imperial and continue to work on topics around robustness verification for perception models and validation for AI agents. Currently most interested in scaling verification to production-size models and exploring which ideas from verification of vision models transfer to LLMs and AI agents.</p>
+    </div>
+    <p>I'm an AI research scientist at <a class="u" href="https://www.safeintelligence.ai">Safe Intelligence</a> in London, working on formal verification and certified robustness of neural networks and AI agents. Most of what I do is about getting verification out of the paper and into contact with real models: verifiers for object detectors, certified training methods, and end-to-end robustness assessments for customers.</p>
+    <p>I finished my PhD in Computer Science at Imperial College London in 2026, supervised by <a class="u" href="https://www.doc.ic.ac.uk/~alessio/">Alessio Lomuscio</a>, on the formal verification and certified training of neural networks. Before that I studied Industrial Engineering and Management at <a class="u" href="https://www.kit.edu/">KIT</a> in Karlsruhe, with a semester abroad in Glasgow, and drifted towards machine learning somewhere in the middle of it.</p>
+    <p>Away from the desk I sail, ride mountain bikes and play tennis.</p>
+  </section>
+
+  <section>
+    <h2>Work</h2>
+    <div class="entry">
+      <div class="when">Dec 2023 —</div>
+      <div class="what"><strong>AI Research Scientist</strong>
+        <div class="where">Safe Intelligence, London</div>
+        <div class="detail">Verification engines for perception models, certified training, and robustness assessments for clients.</div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="when">2019 – 2020</div>
+      <div class="what"><strong>Student Research Assistant</strong>
+        <div class="where">KIT Institute of Operations Research, Karlsruhe</div>
+        <div class="detail">Sequential decision making under system-inherent uncertainty.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="when">2021 – 2026</div>
+      <div class="what"><strong>PhD, Computer Science</strong>
+        <div class="where">Imperial College London</div>
+        <div class="detail">Thesis: <em>Formal Verification and Certified Training of Neural Networks</em>, supervised by <a class="u" href="https://www.doc.ic.ac.uk/~alessio/">Alessio Lomuscio</a>. Funded by UKRI through the <a class="u" href="https://safeandtrustedai.org/">Centre for Doctoral Training in Safe and Trusted AI</a>.</div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="when">2018 – 2021</div>
+      <div class="what"><strong>MSc, Industrial Engineering and Management</strong>
+        <div class="where">Karlsruhe Institute of Technology</div>
+        <div class="detail">Semester abroad at the University of Glasgow.</div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="when">2015 – 2018</div>
+      <div class="what"><strong>BSc, Industrial Engineering and Management</strong>
+        <div class="where">Karlsruhe Institute of Technology</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Teaching</h2>
+    <div class="entry">
+      <div class="when">2022 – 2023</div>
+      <div class="what"><strong>Graduate Teaching Assistant</strong>
+        <div class="where">Imperial College London</div>
+        <div class="detail">Operations Research (two terms) and Computer Vision (one term).</div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="when">2017 – 2019</div>
+      <div class="what"><strong>Academic Tutor, Mathematics</strong>
+        <div class="where">KIT Institute of Stochastics</div>
+        <div class="detail">Weekly tutorials for groups of around thirty students.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Publications</h2>
+    <!--PUBLICATIONS-->
+    <button id="showall" class="btn showall" hidden aria-expanded="false"></button>
+  </section>
+
+  <section>
+    <h2>Awards and service</h2>
+    <div class="entry"><div class="when">2025</div><div class="what"><strong>Top Reviewer Award</strong><div class="where">NeurIPS</div></div></div>
+    <div class="entry"><div class="when">2025</div><div class="what"><strong>Lord Williams of Elvel Prize</strong><div class="where">Entente Cordiale Day Association</div></div></div>
+    <div class="entry"><div class="when">2023</div><div class="what"><strong>Student Travel Scholarship</strong><div class="where">AAAI</div></div></div>
+    <p class="plain">Reviewer for NeurIPS (2024–2026), ICLR (2025–2026), ICML (2025), AAAI (2025–2026) and BMVC (2025).</p>
+  </section>
+
+  <footer>
+    <div>
+      <a class="u mail" rel="nofollow" data-u="YmVuZWRpa3Q=" data-d="c2FmZWludGVsbGlnZW5jZS5haQ=="
+         >benedikt [at] safeintelligence [dot] ai</a> &nbsp;
+      <a class="u" href="https://scholar.google.com/citations?user=gNrX1zoAAAAJ">Google Scholar</a> &nbsp;
+      <a class="u" href="https://github.com/benebrue">GitHub</a> &nbsp;
+      <a class="u" href="https://www.linkedin.com/in/benedikt-brueckner/">LinkedIn</a>
+    </div>
+    <div class="coords">CHART 1 · ED. 2026</div>
+  </footer>
+</div>
+
+<script>
+/* Email assembled at runtime. The address appears NOWHERE in the served HTML: not as text, not in
+   an attribute, and with [dot] in the fallback not even as a bare domain.
+   That defeats regex-over-source harvesting, which is the bulk of address
+   collection. It does not defeat a scraper that executes JS, and nothing
+   client-side would. Without JS the [at]/[dot] form stays readable, so a
+   human is never stranded; it simply isn't a clickable link. */
+document.querySelectorAll(".mail").forEach(el => {
+  const addr = atob(el.dataset.u) + String.fromCharCode(64) + atob(el.dataset.d);
+  el.href = "mailto:" + addr;
+  el.textContent = addr;
+});
+
+/* rhumb lines radiating from the rose */
+{
+  const g = document.getElementById("rhumbs");
+  for (let i = 0; i < 32; i++) {
+    const a = (i / 32) * Math.PI * 2;
+    const l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    l.setAttribute("x1", (Math.cos(a) * 66).toFixed(2));
+    l.setAttribute("y1", (Math.sin(a) * 66).toFixed(2));
+    l.setAttribute("x2", (Math.cos(a) * 460).toFixed(2));
+    l.setAttribute("y2", (Math.sin(a) * 460).toFixed(2));
+    l.setAttribute("stroke-width", i % 4 === 0 ? ".7" : ".35");
+    l.setAttribute("stroke-opacity", i % 4 === 0 ? ".5" : ".28");
+    g.appendChild(l);
+  }
+}
+
+/* BibTeX panels. The publication list is static HTML generated by build.py,
+   so crawlers and no-JS visitors see every entry; JS only adds the folding
+   and the copy button. The copy text is read straight out of the <pre>, so
+   there is no second copy of the BibTeX to drift out of sync. */
+document.querySelectorAll(".pub").forEach(pub => {
+  const panel = pub.querySelector(".bib");
+  const show  = pub.querySelector("[data-bib]");
+  const copy  = pub.querySelector("[data-copy]");
+  const flag  = pub.querySelector(".copied");
+  if (show && panel) show.addEventListener("click", () => {
+    show.setAttribute("aria-expanded", String(panel.classList.toggle("open")));
+  });
+  if (copy && panel) copy.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(panel.querySelector("pre").textContent); } catch {}
+    if (flag) { flag.classList.add("show"); setTimeout(() => flag.classList.remove("show"), 1400); }
+  });
+});
+
+/* Fold the list by RECENCY, not by importance. A "selected publications"
+   split would mean re-deciding what counts as selected every time you
+   publish; folding at a fixed count is mechanical and never needs a
+   judgement call. Year headings hide themselves when they empty out. */
+(() => {
+  const VISIBLE = 8;
+  const WORTH_FOLDING = 4;   // don't add a button that hides one paper
+  const groups = [...document.querySelectorAll(".yeargroup")]
+    .map(g => ({box: g, pubs: [...g.querySelectorAll(".pub")]}));
+  const all = groups.flatMap(g => g.pubs);
+  const toggle = document.getElementById("showall");
+  if (!toggle || all.length < VISIBLE + WORTH_FOLDING) return;
+  let expanded = false;
+  const apply = () => {
+    all.forEach((el, i) => el.hidden = !expanded && i >= VISIBLE);
+    groups.forEach(g => g.box.hidden = g.pubs.every(el => el.hidden));
+    toggle.textContent = expanded ? "Show fewer" : `Show all ${all.length} publications`;
+    toggle.setAttribute("aria-expanded", String(expanded));
+  };
+  toggle.hidden = false;
+  toggle.addEventListener("click", () => {
+    expanded = !expanded;
+    apply();
+    if (!expanded) toggle.scrollIntoView({block: "center", behavior: "smooth"});
+  });
+  apply();
+})();
+</script>
+</body>
+</html>

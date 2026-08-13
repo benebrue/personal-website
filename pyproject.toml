@@ -1,0 +1,11 @@
+[project]
+name = "personal-website"
+version = "0.1.0"
+description = "Personal website — design drafts and static site build"
+requires-python = ">=3.14"
+dependencies = [
+    "bibtexparser>=1.4.4",
+]
+
+[tool.uv]
+package = false

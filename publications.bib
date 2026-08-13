@@ -1,0 +1,193 @@
+%-----------------------------------------------------------------------------
+%   PUBLICATIONS — Benedikt Brückner
+%   Single source of truth. build.py generates the website's publication list
+%   and every BibTeX button from this file.
+%
+%   THIS FILE IS PUBLIC. It is committed to a public GitHub repository, so it
+%   is readable by anyone, indexed by GitHub search, and mirrored by
+%   code-search sites — independently of what the deployed page shows.
+%   Therefore: never add work that is under review. Some venues object to
+%   authors stating publicly that a paper is under submission with them, and
+%   omitting it from the rendered page is not enough when the source is
+%   public. Under-review work belongs in the CV, which is not published.
+%   build.py refuses to build if it finds such an entry.
+%
+%   FORMAT POLICY — deliberately the opposite of the papers-repo bib.bib.
+%   That file serves Benedikt's own bibliographies, where a house style
+%   applies. This one serves OTHER PEOPLE's, so it is maximally complete:
+%
+%     - Full given names, never initials. A style can abbreviate "Benedikt
+%       Brückner" to "B. Brückner" automatically; nothing can expand "B."
+%       back, so abbreviating destroys information.
+%     - Canonical DBLP booktitles, including location and dates. Verbose, but
+%       it is the authoritative record and downstream can always trim.
+%     - DOI, pages, series, volume, publisher and editors where known.
+%       Unused fields are silently dropped by styles that don't want them.
+%     - arXiv eprints alongside published DOIs, so readers can reach a free
+%       copy even when the DOI sits behind a publisher.
+%     - Umlauts as {\"u}: works under pdfLaTeX, XeLaTeX and LuaLaTeX alike.
+%     - Acronyms braced ({IoUCert}, {AAAI}, {YOLO}) so styles that lowercase
+%       titles cannot mangle them.
+%     - Conventional lowercase surname+year+keyword keys, since they end up
+%       pasted into strangers' .tex files.
+%     - No bibsource/biburl/timestamp: DBLP bookkeeping, not bibliography.
+%
+%   NON-STANDARD DISPLAY FIELDS — used by build.py for the web page and
+%   STRIPPED from the BibTeX shown by the copy buttons, so nobody pastes them:
+%     shortvenue  human-readable venue label for the page ("AAAI 2025")
+%     status      badge: preprint | workshop. There is no under-review value:
+%                 build.py rejects it outright, per the warning above.
+%     equal       1-indexed authors sharing an equal-contribution asterisk
+%-----------------------------------------------------------------------------
+
+% TODO: ECCV 2026 proceedings DOI once it is assigned. The 10.48550 DOI on
+% DBLP is the arXiv preprint's, not the proceedings', so it is not used here.
+@inproceedings{brueckner2026ioucert,
+    author    = {Benedikt Br{\"u}ckner and Alejandro J. Mercado and
+                 Yanghao Zhang and Panagiotis Kouvaros and Alessio Lomuscio},
+    title     = {{IoUCert}: Robustness Verification for Anchor-based Object
+                 Detectors},
+    booktitle = {Proceedings of the European Conference on Computer Vision
+                 (ECCV 2026)},
+    year      = {2026},
+    eprint        = {2603.03043},
+    archivePrefix = {arXiv},
+    url       = {https://arxiv.org/abs/2603.03043},
+    note      = {Br{\"u}ckner and Mercado contributed equally},
+    shortvenue = {ECCV 2026},
+    equal      = {1,2},
+}
+
+@inproceedings{brueckner2026background,
+    author    = {Benedikt Br{\"u}ckner and Harleen Hanspal and Alessio Lomuscio},
+    title     = {Certified Background-Invariant Training via Latent
+                 Generative Models},
+    booktitle = {Proceedings of the AAAI 2026 Workshop on Artificial
+                 Intelligence for Air Transportation (AI4AT)},
+    year      = {2026},
+    note      = {Br{\"u}ckner and Hanspal contributed equally},
+    shortvenue = {AI4AT Workshop, AAAI 2026},
+    status     = {workshop},
+    equal      = {1,2},
+}
+
+% Also presented at the AAAI 2026 AI for Cyber Security workshop, but that
+% workshop was non-archival, so the arXiv version is the citable one.
+@misc{brueckner2026convolutional,
+    author    = {Benedikt Br{\"u}ckner and Alessio Lomuscio},
+    title     = {Certified Training for Convolutional Perturbations},
+    year      = {2026},
+    eprint        = {2607.18195},
+    archivePrefix = {arXiv},
+    howpublished  = {arXiv preprint arXiv:2607.18195},
+    doi       = {10.48550/arXiv.2607.18195},
+    url       = {https://arxiv.org/abs/2607.18195},
+    shortvenue = {arXiv preprint},
+    status     = {preprint},
+}
+
+@inproceedings{brueckner2025kernels,
+    author    = {Benedikt Br{\"u}ckner and Alessio Lomuscio},
+    editor    = {Toby Walsh and Julie Shah and Zico Kolter},
+    title     = {Verification of Neural Networks Against Convolutional
+                 Perturbations via Parameterised Kernels},
+    booktitle = {Thirty-Ninth {AAAI} Conference on Artificial Intelligence,
+                 Thirty-Seventh Conference on Innovative Applications of
+                 Artificial Intelligence, Fifteenth Symposium on Educational
+                 Advances in Artificial Intelligence, {AAAI} 2025,
+                 Philadelphia, PA, USA, February 25 - March 4, 2025},
+    pages     = {27215--27223},
+    publisher = {{AAAI} Press},
+    year      = {2025},
+    doi       = {10.1609/aaai.v39i26.34930},
+    url       = {https://doi.org/10.1609/aaai.v39i26.34930},
+    eprint        = {2411.04594},
+    archivePrefix = {arXiv},
+    shortvenue = {AAAI 2025},
+}
+
+@inproceedings{kouvaros2025dynamic,
+    author    = {Panagiotis Kouvaros and Benedikt Br{\"u}ckner and
+                 Patrick Henriksen and Alessio Lomuscio},
+    editor    = {Toby Walsh and Julie Shah and Zico Kolter},
+    title     = {Dynamic Back-Substitution in Bound-Propagation-Based Neural
+                 Network Verification},
+    booktitle = {Thirty-Ninth {AAAI} Conference on Artificial Intelligence,
+                 Thirty-Seventh Conference on Innovative Applications of
+                 Artificial Intelligence, Fifteenth Symposium on Educational
+                 Advances in Artificial Intelligence, {AAAI} 2025,
+                 Philadelphia, PA, USA, February 25 - March 4, 2025},
+    pages     = {27383--27391},
+    publisher = {{AAAI} Press},
+    year      = {2025},
+    doi       = {10.1609/aaai.v39i26.34949},
+    url       = {https://doi.org/10.1609/aaai.v39i26.34949},
+    shortvenue = {AAAI 2025},
+}
+
+@inproceedings{bezouvrakatseli2023shape,
+    author    = {Elfia Bezou-Vrakatseli and Benedikt Br{\"u}ckner and
+                 Luke Thorburn},
+    editor    = {Vadim Malvone and Aniello Murano},
+    title     = {{SHAPE}: {A} Framework for Evaluating the Ethicality of
+                 Influence},
+    booktitle = {Multi-Agent Systems - 20th European Conference, {EUMAS} 2023,
+                 Naples, Italy, September 14-15, 2023, Proceedings},
+    series    = {Lecture Notes in Computer Science},
+    volume    = {14282},
+    pages     = {167--185},
+    publisher = {Springer},
+    year      = {2023},
+    doi       = {10.1007/978-3-031-43264-4\_11},
+    url       = {https://doi.org/10.1007/978-3-031-43264-4\_11},
+    eprint        = {2309.04352},
+    archivePrefix = {arXiv},
+    shortvenue = {EUMAS 2023},
+}
+
+@inproceedings{lan2023semidefinite,
+    author    = {Jianglin Lan and Benedikt Br{\"u}ckner and Alessio Lomuscio},
+    editor    = {Brian Williams and Yiling Chen and Jennifer Neville},
+    title     = {A Semidefinite Relaxation Based Branch-and-Bound Method for
+                 Tight Neural Network Verification},
+    booktitle = {Thirty-Seventh {AAAI} Conference on Artificial Intelligence,
+                 {AAAI} 2023, Thirty-Fifth Conference on Innovative
+                 Applications of Artificial Intelligence, {IAAI} 2023,
+                 Thirteenth Symposium on Educational Advances in Artificial
+                 Intelligence, {EAAI} 2023, Washington, DC, USA,
+                 February 7-14, 2023},
+    pages     = {14946--14954},
+    publisher = {{AAAI} Press},
+    year      = {2023},
+    doi       = {10.1609/aaai.v37i12.26745},
+    url       = {https://doi.org/10.1609/aaai.v37i12.26745},
+    shortvenue = {AAAI 2023},
+}
+
+% eprint 2012.01338 is an earlier version of this work, published under a
+% different title ("Siamese Basis Function Networks for Defect
+% Classification") and with a fourth author, Jürgen Fleischer. Attached here
+% so readers can reach a free copy; deliberately not a separate entry.
+@inproceedings{schlagenhauf2022siamese,
+    author    = {Tobias Schlagenhauf and Faruk Yildirim and
+                 Benedikt Br{\"u}ckner},
+    editor    = {Paolo Masci and Cinzia Bernardeschi and Pierluigi Graziani
+                 and Mario Koddenbrock and Maurizio Palmieri},
+    title     = {Siamese Basis Function Networks for Data-Efficient Defect
+                 Classification in Technical Domains},
+    booktitle = {Software Engineering and Formal Methods. {SEFM} 2022
+                 Collocated Workshops - AI4EA, F-IDE, CoSim-CPS, CIFMA,
+                 Berlin, Germany, September 26-30, 2022, Revised Selected
+                 Papers},
+    series    = {Lecture Notes in Computer Science},
+    volume    = {13765},
+    pages     = {71--92},
+    publisher = {Springer},
+    year      = {2022},
+    doi       = {10.1007/978-3-031-26236-4\_7},
+    url       = {https://doi.org/10.1007/978-3-031-26236-4\_7},
+    eprint        = {2012.01338},
+    archivePrefix = {arXiv},
+    shortvenue = {AI4EA Workshop, SEFM 2022},
+    status     = {workshop},
+}
