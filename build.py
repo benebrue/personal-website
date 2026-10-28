@@ -37,7 +37,7 @@ BIB_META = {"ID", "ENTRYTYPE"}
 # bibtexparser lowercases every field name, so match on lowercase here...
 FIELD_ORDER = [
     "author", "editor", "title", "booktitle", "journal", "howpublished",
-    "series", "volume", "number", "pages", "publisher", "year",
+    "series", "volume", "number", "pages", "publisher", "school", "year",
     "doi", "url", "eprint", "archiveprefix", "primaryclass", "note",
 ]
 # ...and restore the conventional camelCase when writing it back out. BibTeX
